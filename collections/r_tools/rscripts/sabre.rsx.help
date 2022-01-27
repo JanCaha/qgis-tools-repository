@@ -1,0 +1,6 @@
+{
+  "ALG_DESC": "Calculates mapcurves and v-measure (comparison or similarity values) for two rasters. \n Details about the measures can be found in <a href=\"https://cran.r-project.org/web/packages/sabre/readme/README.html\">readme of the sabre package</a>. \n The outputs are numerical values for measures and their details. These result are also printed in tool log.", 
+  "ALG_CREATOR": "Jan Caha",
+  "in_raster_1": "First raster",
+  "in_raster_2": "Second raster"
+}

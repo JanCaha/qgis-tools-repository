@@ -1,0 +1,5 @@
+{
+  "ALG_DESC": "Updates all available R packages except for `remotes`, which cannot be updates as it is loaded by the script. There are no inputs or outputs from the algorithm.", 
+  "force_uninstall": "Parameter specifying if the libraries should be uninstalled before update.",
+  "ALG_CREATOR": "Jan Caha"
+}
