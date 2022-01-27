@@ -1,4 +1,4 @@
-from qgis.PyQt.QtCore import QVariant
+from qgis.PyQt.QtCore import QVariant, QCoreApplication
 from qgis.core import (QgsProcessing, QgsProcessingAlgorithm, QgsProcessingParameterFeatureSource,
                        QgsProcessingParameterField, QgsProcessingParameterBoolean, QgsVectorLayer,
                        QgsFeature, QgsProcessingFeatureSourceDefinition)
@@ -127,3 +127,6 @@ class SumPointsValueToNeighboringPolygonsProcessingAlgorithm(QgsProcessingAlgori
         polygons.commitChanges()
 
         return {None}
+
+    def tr(self, string):
+        return QCoreApplication.translate('Processing', string)
