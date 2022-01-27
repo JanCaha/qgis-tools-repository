@@ -1,0 +1,6 @@
+{
+  "ALG_DESC": "Calculates confusion matrix for two rasters. The rasters are expected to be the same in terms of spatial size, cell size and categories of data. The algorithm outputs confusion matrix for the classes in rasters. \n Output is only printed in the tool log.", 
+  "ALG_CREATOR": "Jan Caha",
+  "raster_predicted": "Raster with data to be evaluated against true values.",
+  "raster_true_reference": "Raster that will be used as true values and the predicted raster is compared to it."
+}
