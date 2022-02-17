@@ -1,0 +1,7 @@
+{
+  "ALG_DESC": "Downloads selected RUIAN data layer. Data are cached, so that the download does not happen every time.", 
+  "layer": "Data layer to download.",
+  "result": "Resulting data layer.",
+  "ALG_CREATOR": "Jan Caha",
+  "ALG_VERSION": "0.1"
+}
