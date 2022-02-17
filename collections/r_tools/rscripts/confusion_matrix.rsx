@@ -18,7 +18,8 @@ raster_to_factor <- function(filename){
   values <- as_factor(values)
 }
 
-raster_predicted <- raster_to_factor(raster_predicted)
-raster_true_reference <- raster_to_factor(raster_true_reference)
+list_of_factors <- list(raster_to_factor(raster_predicted), raster_to_factor(raster_true_reference))
 
->confusionMatrix(raster_predicted, raster_true_reference)
+list_of_factors <- fct_unify(list_of_factors, lvls_union(list_of_factors))
+
+>confusionMatrix(list_of_factors[[1]], list_of_factors[[2]])

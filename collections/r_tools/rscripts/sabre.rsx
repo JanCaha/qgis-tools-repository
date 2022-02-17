@@ -21,6 +21,6 @@ mc_value <- mc$gof
 vm <- vmeasure_calc(x = raster1, y = raster2)
 >vm
 
-vm_value <- vm_value$v_measure
-vm_homogeneity <- vm_value$homogeneity
-vm_completeness <- vm_value$completeness
+vm_value <- vm$v_measure
+vm_homogeneity <- vm$homogeneity
+vm_completeness <- vm$completeness
