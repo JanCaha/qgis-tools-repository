@@ -4,7 +4,7 @@
     "expressions": [
         {
             "description": "Converts geometry to centroid with CRS WGS-84, then extract coordinates as a string in degrees, minutes.",
-            "expression": "with_variable('point', point_to_wgs84_coordinate(@layer_crs, $geometry), concat(regexp_replace(to_dms(x(@point), 'x', 5, 'suffix'), ',', '.'), ' ', regexp_replace(to_dms(y(@point), 'y', 5, 'suffix'), ',', '.')))",
+            "expression": "with_variable('point', transform(centroid( $geometry ), @layer_cr, 'EPSG:4326'), concat(regexp_replace(to_dms(x(@point), 'x', 5, 'suffix'), ',', '.'), ' ', regexp_replace(to_dms(y(@point), 'y', 5, 'suffix'), ',', '.')))",
             "group": "user",
             "name": "centroid_to_wgs84_to_string",
             "type": "expression"
