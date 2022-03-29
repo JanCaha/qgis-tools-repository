@@ -111,6 +111,8 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
                 if feedback.isCanceled():
                     break
 
+                result_geom = None
+
                 result_feature = QgsFeature(all_fields)
 
                 result_feature.clearGeometry()
@@ -149,13 +151,14 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
 
                     if distance < smallest_distance:
 
-                        smallest_distance = distance
+                        result_geom = QgsLineString([point, closest_point])
 
-                        geom = QgsLineString([point, closest_point])
+                        smallest_distance = distance
 
             feedback.setProgress(int((start_feature_count * closest_geom_count) * total))
 
-            result_feature.setGeometry(geom)
+            if result_geom:
+                result_feature.setGeometry(result_geom)
 
             result_feature.setAttribute(all_fields.lookupField(id_field_name_input_points),
                                         start_feature.attribute(id_field_name_input_points))
