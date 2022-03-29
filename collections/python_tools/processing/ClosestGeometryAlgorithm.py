@@ -5,7 +5,7 @@ from qgis.core import (QgsProcessing, QgsProcessingAlgorithm, QgsProcessingParam
                        QgsProcessingParameterField, QgsFeature, QgsProcessingParameterFeatureSink,
                        QgsProcessingException, QgsFields, QgsField, QgsPoint, QgsWkbTypes,
                        QgsGeometryUtils, QgsLineString, QgsPolygon, QgsProcessingFeedback,
-                       QgsCoordinateTransform, QgsProject)
+                       QgsCoordinateTransform, QgsProject, QgsGeometry, QgsAbstractGeometry)
 
 
 class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
@@ -106,16 +106,14 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
 
             smallest_distance = sys.float_info.max
 
+            result_geom = None
+
             for closest_geom_count, closest_geom_feature in enumerate(closest_layer.getFeatures()):
 
                 if feedback.isCanceled():
                     break
 
-                result_geom = None
-
                 result_feature = QgsFeature(all_fields)
-
-                result_feature.clearGeometry()
 
                 point_geom = start_feature.geometry()
 
@@ -128,20 +126,7 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
 
                 if distance_bbox < smallest_distance:
 
-                    if closest_layer.wkbType() == QgsWkbTypes.Polygon or closest_layer.wkbType(
-                    ) == QgsWkbTypes.MultiPolygon:
-                        geom_to_check = QgsPolygon()
-                        geom_to_check.fromWkt(closest_geom.asWkt())
-
-                    if closest_layer.wkbType() == QgsWkbTypes.LineString or closest_layer.wkbType(
-                    ) == QgsWkbTypes.MultiLineString:
-                        geom_to_check = QgsLineString()
-                        geom_to_check.fromWkt(closest_geom.asWkt())
-
-                    if closest_layer.wkbType() == QgsWkbTypes.Point or closest_layer.wkbType(
-                    ) == QgsWkbTypes.MultiPoint:
-                        geom_to_check = QgsPoint()
-                        geom_to_check.fromWkt(closest_geom.asWkt())
+                    geom_to_check = geometry_to_abstractgeometry(closest_geom)
 
                     point = QgsPoint(point_geom.asPoint().x(), point_geom.asPoint().y())
 
@@ -173,3 +158,20 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
 
     def tr(self, string):
         return QCoreApplication.translate('Processing', string)
+
+
+def geometry_to_abstractgeometry(geom: QgsGeometry) -> QgsAbstractGeometry:
+
+    if geom.wkbType() == QgsWkbTypes.Polygon or geom.wkbType() == QgsWkbTypes.MultiPolygon:
+        geom_to_check = QgsPolygon()
+        geom_to_check.fromWkt(geom.asWkt())
+
+    if geom.wkbType() == QgsWkbTypes.LineString or geom.wkbType() == QgsWkbTypes.MultiLineString:
+        geom_to_check = QgsLineString()
+        geom_to_check.fromWkt(geom.asWkt())
+
+    if geom.wkbType() == QgsWkbTypes.Point or geom.wkbType() == QgsWkbTypes.MultiPoint:
+        geom_to_check = QgsPoint()
+        geom_to_check.fromWkt(geom.asWkt())
+
+    return geom_to_check
