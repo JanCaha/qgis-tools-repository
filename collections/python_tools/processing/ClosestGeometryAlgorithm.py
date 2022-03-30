@@ -5,7 +5,8 @@ from qgis.core import (QgsProcessing, QgsProcessingAlgorithm, QgsProcessingParam
                        QgsProcessingParameterField, QgsFeature, QgsProcessingParameterFeatureSink,
                        QgsProcessingException, QgsFields, QgsField, QgsPoint, QgsWkbTypes,
                        QgsGeometryUtils, QgsLineString, QgsPolygon, QgsProcessingFeedback,
-                       QgsCoordinateTransform, QgsProject, QgsGeometry, QgsAbstractGeometry)
+                       QgsCoordinateTransform, QgsProject, QgsGeometry, QgsAbstractGeometry,
+                       QgsMultiPoint, QgsMultiLineString, QgsMultiPolygon)
 
 
 class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
@@ -162,16 +163,28 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
 
 def geometry_to_abstractgeometry(geom: QgsGeometry) -> QgsAbstractGeometry:
 
-    if geom.wkbType() == QgsWkbTypes.Polygon or geom.wkbType() == QgsWkbTypes.MultiPolygon:
+    if geom.wkbType() == QgsWkbTypes.Polygon:
         geom_to_check = QgsPolygon()
         geom_to_check.fromWkt(geom.asWkt())
 
-    if geom.wkbType() == QgsWkbTypes.LineString or geom.wkbType() == QgsWkbTypes.MultiLineString:
+    if geom.wkbType() == QgsWkbTypes.MultiPolygon:
+        geom_to_check = QgsMultiPolygon()
+        geom_to_check.fromWkt(geom.asWkt())
+
+    if geom.wkbType() == QgsWkbTypes.LineString:
         geom_to_check = QgsLineString()
         geom_to_check.fromWkt(geom.asWkt())
 
-    if geom.wkbType() == QgsWkbTypes.Point or geom.wkbType() == QgsWkbTypes.MultiPoint:
+    if geom.wkbType() == QgsWkbTypes.MultiLineString:
+        geom_to_check = QgsMultiLineString()
+        geom_to_check.fromWkt(geom.asWkt())
+
+    if geom.wkbType() == QgsWkbTypes.Point:
         geom_to_check = QgsPoint()
+        geom_to_check.fromWkt(geom.asWkt())
+
+    if geom.wkbType() == QgsWkbTypes.MultiPoint:
+        geom_to_check = QgsMultiPoint()
         geom_to_check.fromWkt(geom.asWkt())
 
     return geom_to_check
