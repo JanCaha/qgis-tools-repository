@@ -131,7 +131,13 @@ class ClosestGeometryAlgorithm(QgsProcessingAlgorithm):
 
                     point = QgsPoint(point_geom.asPoint().x(), point_geom.asPoint().y())
 
-                    closest_point = QgsGeometryUtils.closestPoint(geom_to_check, point)
+                    if isinstance(geom_to_check, QgsPoint):
+
+                        closest_point = geom_to_check
+
+                    else:
+
+                        closest_point = QgsGeometryUtils.closestPoint(geom_to_check, point)
 
                     distance = point.distance(closest_point)
 
