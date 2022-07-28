@@ -2,7 +2,7 @@ from qgis.core import (QgsProject, QgsVectorLayer, QgsFeature, QgsGeometry, QgsG
                        QgsPoint, QgsPointXY, qgsfunction)
 
 
-@qgsfunction(args='auto', group='Label Position', referenced_columns=[])
+@qgsfunction(args='auto', group='Label', referenced_columns=[])
 def angle_point_outside_polygon(layer_name: str, feature: QgsFeature, parent):
     geometry = feature.geometry()
     project = QgsProject.instance()
@@ -39,7 +39,7 @@ def angle_point_outside_polygon(layer_name: str, feature: QgsFeature, parent):
         return return_value
 
 
-@qgsfunction(args='auto', group='Label Position', referenced_columns=[])
+@qgsfunction(args='auto', group='Label', referenced_columns=[])
 def point_outside_polygon(layer_name: str, offset: float, feature: QgsFeature, parent):
     geometry = feature.geometry()
     project = QgsProject.instance()
