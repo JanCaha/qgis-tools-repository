@@ -95,8 +95,8 @@ class ReplaceRasterValuesAlgorithm(QgsProcessingAlgorithm):
             'OPTIONS': '',
             'OUTPUT': raster_one_value,
             'UNITS': 1,
-            'WIDTH': raster_extent.width() / raster_layer.dataProvider().xSize(),
-            'HEIGHT': raster_extent.height() / raster_layer.dataProvider().ySize()
+            'WIDTH': raster_layer.dataProvider().xSize(),
+            'HEIGHT': raster_layer.dataProvider().ySize()
         }
 
         processing.run("gdal:rasterize", params)
