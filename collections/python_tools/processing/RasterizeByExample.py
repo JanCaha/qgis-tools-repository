@@ -1,7 +1,7 @@
 from qgis.core import (QgsProcessingAlgorithm, QgsProcessingParameterVectorLayer,
                        QgsProcessingParameterRasterLayer, QgsProcessingParameterField,
                        QgsProcessingParameterRasterDestination, QgsRectangle,
-                       QgsCoordinateReferenceSystem, QgsRasterDataProvider)
+                       QgsCoordinateReferenceSystem, QgsRasterDataProvider, QgsRasterInterface)
 
 from qgis import processing
 
@@ -53,10 +53,6 @@ class RasterizeByExampleAlgorithm(QgsProcessingAlgorithm):
 
         extent: QgsRectangle = raster_template.extent()
 
-        crs: QgsCoordinateReferenceSystem = input.crs()
-
-        extent_string = f"{extent.xMinimum()},{extent.xMaximum()},{extent.yMinimum()},{extent.yMaximum()} [{crs.authid()}]"
-
         raster_data_provider: QgsRasterDataProvider = raster_template.dataProvider()
         no_data = raster_data_provider.sourceNoDataValue(1)
 
@@ -66,9 +62,9 @@ class RasterizeByExampleAlgorithm(QgsProcessingAlgorithm):
                 'FIELD': field_name_vectorize,
                 'BURN': 0,
                 'UNITS': 0,
-                'WIDTH': raster_template.width(),
-                'HEIGHT': raster_template.height(),
-                'EXTENT': extent_string,
+                'WIDTH': raster_data_provider.xSize(),
+                'HEIGHT': raster_data_provider.ySize(),
+                'EXTENT': extent,
                 'NODATA': no_data,
                 'OPTIONS': '',
                 'DATA_TYPE': 5,
