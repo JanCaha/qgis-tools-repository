@@ -101,7 +101,7 @@ class ClipRasterByExtent(GdalAlgorithm):
 
     def checkParameterValues(self, parameters, context):
 
-        vector = self.parameterAsRasterLayer(parameters, self.CLIP_LAYER, context)
+        vector = self.parameterAsVectorLayer(parameters, self.CLIP_LAYER, context)
 
         vector_crs = vector.crs()
 
