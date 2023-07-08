@@ -27,26 +27,26 @@ class DownloadCuzkElevationData(QgsProcessingAlgorithm):
         return 'downloadcuzkelevationdata'
 
     def displayName(self):
-        return self.tr('Download CUZK Elevation Data')
+        return 'Download CUZK Elevation Data'
 
     def group(self):
-        return self.tr('Point Cloud Tools')
+        return 'Point Cloud Tools'
 
     def groupId(self):
         return 'pointcloudtools'
 
     def shortHelpString(self):
-        return self.tr("Download CUZK Elevation Data")
+        return "Download CUZK Elevation Data"
 
     def initAlgorithm(self, config=None):
 
         self.addParameter(
             QgsProcessingParameterEnum(self.DATA_TYPE, "Data To Download", self.DATA_TYPES, allowMultiple=False, defaultValue=0))
 
-        self.addParameter(QgsProcessingParameterExtent(self.EXTENT, self.tr('Extent')))
+        self.addParameter(QgsProcessingParameterExtent(self.EXTENT, 'Extent'))
 
         self.addParameter(
-            QgsProcessingParameterFolderDestination(self.OUTPUT, self.tr('Output destination')))
+            QgsProcessingParameterFolderDestination(self.OUTPUT, 'Output destination'))
 
     def processAlgorithm(self, parameters, context, feedback):
 
